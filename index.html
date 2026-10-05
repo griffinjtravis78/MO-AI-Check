@@ -261,6 +261,14 @@
                             <li><strong>Stylistic Fingerprints:</strong> AI writing relies on predictable structures—opening with a broad statement, neutral tone, and a mononymous conclusion labeled "Conclusion".</li>
                             <li><strong>Overused Jargon & Transitions:</strong> Watch for words like <em>delve, tapestry, align, seamless, testament, beacon, robust, leverage, pivotal,</em> and <em>synergy</em>, plus em dashes and breathless short sentences.</li>
                             <li><strong>HR & Resume Screening:</strong> Look for generic fluff lacking specific metrics/budgets, unnaturally balanced bullet point rhythms, and unusual PDF metadata authoring tags.</li>
+                            <li><strong>Complementary HR Ecosystem Tools:</strong>
+                                <ul>
+                                    <li><em>Applicant Tracking Systems (ATS):</em> Uniform parsing via platforms like NEOGOV or Workday to prevent hidden graphic-design layout tricks.</li>
+                                    <li><em>Document Forensic Tools:</em> ExifTool or Office property inspectors to check author metadata and creation timestamps.</li>
+                                    <li><em>Controlled Assessments:</em> Sandbox platforms (TestGorilla/HackerRank) to establish verified writing and skill baselines.</li>
+                                    <li><em>Structured Behavioral Rubrics:</em> Competency-based interview questions to force candidates to verbally defend resume claims.</li>
+                                </ul>
+                            </li>
                             <li><strong>Fabricated Citations:</strong> AI frequently hallucinates fake studies, exact quotes, and non-existent links that look completely authentic until verified.</li>
                         </ul>
                     </div>
@@ -363,13 +371,13 @@
                     <p id="exifText" style="margin: 5px 0 0 0; color: #64748b;">Scanning unencrypted software tags and description fields...</p>
                 </div>
                 <div style="background: #f8fafc; border: 1px solid var(--border-color); padding: 1rem; border-radius: 6px;">
-                    <strong>3. Structural & Contextual Heuristics / HR Workflow</strong>
+                    <strong>3. Structural & Contextual Heuristics / HR Ecosystem Workflow</strong>
                     <p id="heuristicText" style="margin: 5px 0 0 0; color: #64748b;">Evaluating formatting patterns and generation footprints...</p>
                 </div>
             </div>
 
             <div style="margin-top: 2rem; border-top: 1px solid var(--border-color); padding-top: 1rem; font-size: 0.75rem; color: #64748b;">
-                <p><strong>Note for Reviewers:</strong> This research prototype evaluates metadata packets, linguistic patterns, and structural signatures. If C2PA manifests are stripped due to social platform compression, human visual inspection via the checklist is advised.</p>
+                <p><strong>Note for Reviewers:</strong> This research prototype evaluates metadata packets, linguistic patterns, and structural signatures. Combine with ATS parsing, document forensics, and structured behavioral rubrics for robust validation.</p>
             </div>
         </div>
     </div>
@@ -417,14 +425,14 @@
                     statusBadge.className = "badge badge-warning";
                     statusBadge.innerText = "AI Stylistic Markers Flagged";
                     document.getElementById('c2paText').innerText = "N/A - Text document format does not utilize binary C2PA image manifests.";
-                    document.getElementById('exifText').innerText = `Linguistic scan detected overused generative AI vocabulary terms: "${foundKeywords.join(', ') || 'Structural symmetry pattern'}".`;
-                    document.getElementById('heuristicText').innerText = "Recommended HR Action: Proceed with structured behavioral interview. Ask candidate to verbally substantiate specific project metrics and operational details.";
+                    document.getElementById('exifText').innerText = `Linguistic scan detected overused generative AI vocabulary terms: "${foundKeywords.join(', ') || 'Structural symmetry pattern'}". Recommend secondary doc-property inspection via ExifTool.`;
+                    document.getElementById('heuristicText').innerText = "Recommended HR Action: Cross-reference with standardized ATS intake data, deploy controlled writing sandbox assessment, and execute structured behavioral rubric interview.";
                 } else {
                     statusBadge.className = "badge badge-success";
                     statusBadge.innerText = "Natural Text Patterns";
                     document.getElementById('c2paText').innerText = "N/A - Text document format.";
                     document.getElementById('exifText').innerText = "Text exhibits standard professional cadence and varied sentence length rhythm with minimal synthetic vocabulary markers.";
-                    document.getElementById('heuristicText').innerText = "Standard review workflow applies. No immediate stylistic flags detected.";
+                    document.getElementById('heuristicText').innerText = "Standard review workflow applies. Proceed with normal ATS evaluation and interview screening.";
                 }
 
             } else if (fileInput) {
