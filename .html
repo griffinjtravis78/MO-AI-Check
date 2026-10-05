@@ -4,310 +4,409 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Missouri State Team - AI Content Authenticity & Verification Portal</title>
-    <!-- Tailwind CSS for modern, professional UI styling -->
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- FontAwesome for clean iconography -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-dark: #1e293b;
+            --accent: #d97706;
+            --bg-color: #f8fafc;
+            --text-main: #334155;
+            --border-color: #cbd5e1;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: #0f172a;
+            color: white;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        header p {
+            margin: 5px 0 0 0;
+            font-size: 0.875rem;
+            color: #94a3b8;
+        }
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        @media (max-width: 900px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+        }
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .card h2 {
+            margin-top: 0;
+            font-size: 1.25rem;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .accordion-item {
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 0.75rem;
+            overflow: hidden;
+        }
+        .accordion-btn {
+            width: 100%;
+            padding: 1rem;
+            background: #f1f5f9;
+            border: none;
+            text-align: left;
+            font-weight: 600;
+            color: #1e293b;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .accordion-btn:hover {
+            background: #e2e8f0;
+        }
+        .accordion-content {
+            display: none;
+            padding: 1rem;
+            background: white;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .accordion-content.active {
+            display: block;
+        }
+        .hints-box {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            color: #92400e;
+        }
+        .hints-box ul {
+            margin: 0.5rem 0 0 1.25rem;
+            padding: 0;
+        }
+        .dropzone {
+            border: 2px dashed var(--border-color);
+            border-radius: 6px;
+            padding: 2rem;
+            text-align: center;
+            background: #f8fafc;
+            position: relative;
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
+        .dropzone input {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            width: 100%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn:hover {
+            background: #1d4ed8;
+        }
+        .report-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto 2rem auto;
+            width: calc(100% - 2rem);
+            box-sizing: border-box;
+        }
+        .hidden {
+            display: none;
+        }
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .badge-warning { background: #fef3c7; color: #92400e; }
+        .badge-success { background: #d1fae5; color: #065f46; }
+        footer {
+            background: #0f172a;
+            color: #94a3b8;
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.8rem;
+            margin-top: auto;
+        }
         @media print {
-            body * {
-                visibility: hidden;
-            }
-            #printable-report, #printable-report * {
-                visibility: visible;
-            }
-            #printable-report {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                margin: 0;
-                padding: 20px;
-                box-shadow: none !important;
-                background: white !important;
-            }
-            .no-print {
-                display: none !important;
-            }
+            body * { visibility: hidden; }
+            #printable-report, #printable-report * { visibility: visible; }
+            #printable-report { position: absolute; left: 0; top: 0; width: 100%; margin: 0; padding: 1rem; border: none; box-shadow: none; }
+            .no-print { display: none !important; }
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col">
+<body>
 
-    <!-- Header Section -->
-    <header class="bg-slate-900 text-white shadow-md no-print">
-        <div class="max-w-7xl mx-auto px-4 py-6 flex flex-col md:flex-row justify-between items-center">
-            <div>
-                <h1 class="text-2xl font-bold tracking-tight flex items-center gap-2">
-                    <i class="fa-solid fa-shield-halved text-amber-500"></i> Missouri State Team
-                </h1>
-                <p class="text-sm text-slate-400 mt-1">AI Content Detection Checklist & Provenance Verification Portal</p>
-            </div>
-            <div class="mt-4 md:mt-0 bg-slate-800 px-4 py-2 rounded-lg border border-slate-700 text-xs text-slate-300">
-                <i class="fa-solid fa-circle-info text-sky-400 mr-1"></i> Operational Reference Tool
-            </div>
-        </div>
+    <header class="no-print">
+        <h1><i class="fa-solid fa-shield-halved" style="color: #fbbf24;"></i> Missouri State Team</h1>
+        <p>MO-AI-Checker: Research prototype for AI validation for the State of Missouri.</p>
     </header>
 
-    <!-- Main Container -->
-    <main class="max-w-7xl mx-auto px-4 py-8 flex-grow grid grid-cols-1 lg:grid-cols-12 gap-8 w-full">
-        
-        <!-- Left Column: Accordion Checklists (7 Cols) -->
-        <section class="lg:col-span-7 space-y-6 no-print">
-            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-                <h2 class="text-xl font-semibold text-slate-900 mb-2 flex items-center gap-2">
-                    <i class="fa-solid fa-list-check text-indigo-600"></i> Visual & Textual Tell-Tale Checklist
-                </h2>
-                <p class="text-sm text-slate-500 mb-6">Click any media category below to expand the inspection guidelines.</p>
+    <main class="no-print">
+        <!-- Left: Accordion Checklists -->
+        <section>
+            <div class="card">
+                <h2><i class="fa-solid fa-list-check" style="color: var(--primary);"></i> Visual & Textual Tell-Tale Checklist</h2>
+                <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 1.5rem;">Click any category to expand inspection criteria.</p>
 
-                <div class="space-y-4" id="accordion-container">
-                    
-                    <!-- 1. Images Accordion -->
-                    <div class="border border-slate-200 rounded-lg overflow-hidden transition-all">
-                        <button onclick="toggleAccordion('img-content')" class="w-full flex justify-between items-center p-4 bg-slate-50 hover:bg-slate-100 font-medium text-slate-800 text-left transition-colors">
-                            <span class="flex items-center gap-3"><i class="fa-regular fa-image text-indigo-500 w-5"></i> 1. Images</span>
-                            <i id="icon-img-content" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform"></i>
-                        </button>
-                        <div id="img-content" class="hidden p-4 bg-white text-sm text-slate-600 space-y-3 border-t border-slate-100">
-                            <p class="italic text-slate-500">While older tricks like counting fingers are less reliable now, image generation still struggles with physics and deep consistency.</p>
-                            <ul class="list-disc pl-5 space-y-2">
-                                <li><strong>Content Credentials & Watermarks:</strong> Look for cryptographic provenance data (like C2PA standards backed by Adobe, Google, and OpenAI) via tools like <a href="https://contentcredentials.org" target="_blank" class="text-indigo-600 underline">contentcredentials.org</a> or hidden metadata watermarks (such as SynthID).</li>
-                                <li><strong>Reverse Image Search:</strong> Drop the image into Google Lens or TinEye to check where it first appeared or if it’s a real photo pasted with AI elements.</li>
-                                <li><strong>Geometric & Physics Flaws:</strong> Check background alignment. Look for melting architecture, asymmetrical earrings or eyeglasses, impossible reflections in glass/water, and shadows pointing in multiple directions due to multiple light sources.</li>
-                                <li><strong>Garbled Text:</strong> Signs, storefronts, and book spines often render as beautiful gibberish or nonsense letters.</li>
-                            </ul>
-                        </div>
+                <div class="accordion-item">
+                    <button class="accordion-btn" onclick="toggleAccordion('img-box')">
+                        <span><i class="fa-regular fa-image" style="color: var(--primary); margin-right: 8px;"></i> 1. Images</span>
+                        <i class="fa-solid fa-chevron-down" id="icon-img-box"></i>
+                    </button>
+                    <div id="img-box" class="accordion-content">
+                        <p><em>While older tricks like counting fingers are less reliable now, image generation still struggles with physics and deep consistency.</em></p>
+                        <ul>
+                            <li><strong>Content Credentials & Watermarks:</strong> Look for cryptographic provenance data (like C2PA standards backed by Adobe, Google, and OpenAI) via tools like <a href="https://contentcredentials.org" target="_blank">contentcredentials.org</a> or hidden metadata watermarks (such as SynthID).</li>
+                            <li><strong>Reverse Image Search:</strong> Drop the image into Google Lens or TinEye to check where it first appeared or if it’s a real photo pasted with AI elements.</li>
+                            <li><strong>Geometric & Physics Flaws:</strong> Check background alignment. Look for melting architecture, asymmetrical earrings or eyeglasses, impossible reflections in glass/water, and shadows pointing in multiple directions.</li>
+                            <li><strong>Garbled Text:</strong> Signs, storefronts, and book spines often render as beautiful gibberish or nonsense letters.</li>
+                        </ul>
                     </div>
-
-                    <!-- 2. Video Accordion -->
-                    <div class="border border-slate-200 rounded-lg overflow-hidden transition-all">
-                        <button onclick="toggleAccordion('vid-content')" class="w-full flex justify-between items-center p-4 bg-slate-50 hover:bg-slate-100 font-medium text-slate-800 text-left transition-colors">
-                            <span class="flex items-center gap-3"><i class="fa-solid fa-video text-indigo-500 w-5"></i> 2. Video</span>
-                            <i id="icon-vid-content" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform"></i>
-                        </button>
-                        <div id="vid-content" class="hidden p-4 bg-white text-sm text-slate-600 space-y-3 border-t border-slate-100">
-                            <p class="italic text-slate-500">AI video generation adds temporal dimensions where things can glitch over time.</p>
-                            <ul class="list-disc pl-5 space-y-2">
-                                <li><strong>Morphing Backgrounds:</strong> Watch static background elements (like bricks, trees, or crowd members) to see if they subtly shift, warp, or change shape between frames.</li>
-                                <li><strong>Anatomical Inconsistencies:</strong> Watch human movement for sudden slips in physics, such as hands passing through objects, stiff body language, or a glass/unblinking stare.</li>
-                                <li><strong>Audio-Visual Sync:</strong> Check if lip movements precisely match speech, or if ambient environmental background noise disappears unnaturally during dialogue.</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- 3. Text & Articles Accordion -->
-                    <div class="border border-slate-200 rounded-lg overflow-hidden transition-all">
-                        <button onclick="toggleAccordion('txt-content')" class="w-full flex justify-between items-center p-4 bg-slate-50 hover:bg-slate-100 font-medium text-slate-800 text-left transition-colors">
-                            <span class="flex items-center gap-3"><i class="fa-regular fa-file-lines text-indigo-500 w-5"></i> 3. Text & Articles</span>
-                            <i id="icon-txt-content" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform"></i>
-                        </button>
-                        <div id="txt-content" class="hidden p-4 bg-white text-sm text-slate-600 space-y-3 border-t border-slate-100">
-                            <p class="italic text-slate-500">AI text detectors are notoriously unreliable and prone to false positives (especially on non-native speakers), so human evaluation of style and substance is key.</p>
-                            <ul class="list-disc pl-5 space-y-2">
-                                <li><strong>Stylistic Fingerprints:</strong> AI writing often relies on predictable structures—such as opening with a broad statement, using an overly balanced, neutral tone, and wrapping up with a mononymous conclusion labeled simply "Conclusion".</li>
-                                <li><strong>Overused Jargon & Transitions:</strong> Watch for favorite AI vocabulary words like <em>delve, tapestry, align, seamless, testament,</em> and <em>beacon</em>, alongside an over-reliance on em dashes and breathless, short sentences.</li>
-                                <li><strong>Fabricated Citations:</strong> AI frequently hallucinates fake studies, exact quotes, and non-existent links that look completely authentic until you click through to verify them.</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- 4. Code Accordion -->
-                    <div class="border border-slate-200 rounded-lg overflow-hidden transition-all">
-                        <button onclick="toggleAccordion('code-content')" class="w-full flex justify-between items-center p-4 bg-slate-50 hover:bg-slate-100 font-medium text-slate-800 text-left transition-colors">
-                            <span class="flex items-center gap-3"><i class="fa-solid fa-code text-indigo-500 w-5"></i> 4. Code</span>
-                            <i id="icon-code-content" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform"></i>
-                        </button>
-                        <div id="code-content" class="hidden p-4 bg-white text-sm text-slate-600 space-y-3 border-t border-slate-100">
-                            <p class="italic text-slate-500">AI-generated code looks clean on the surface but often carries structural tells:</p>
-                            <ul class="list-disc pl-5 space-y-2">
-                                <li><strong>The "Too Clever" or Generic Solution:</strong> AI tends to write overly verbose, standard textbook algorithms or boilerplate code that solves a problem in an overly complex or abstract way.</li>
-                                <li><strong>Phantom Dependencies:</strong> Code blocks may import libraries, packages, or specific module functions that do not actually exist or are deprecated.</li>
-                                <li><strong>Subtle Logic Gaps:</strong> The syntax will often compile and look pristine, but it can miss edge cases, security validation, or state-handling logic native to the broader project architecture.</li>
-                            </ul>
-                        </div>
-                    </div>
-
                 </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-btn" onclick="toggleAccordion('vid-box')">
+                        <span><i class="fa-solid fa-video" style="color: var(--primary); margin-right: 8px;"></i> 2. Video</span>
+                        <i class="fa-solid fa-chevron-down" id="icon-vid-box"></i>
+                    </button>
+                    <div id="vid-box" class="accordion-content">
+                        <p><em>AI video generation adds temporal dimensions where things can glitch over time.</em></p>
+                        <ul>
+                            <li><strong>Morphing Backgrounds:</strong> Watch static background elements (bricks, trees, crowds) to see if they subtly shift, warp, or change shape between frames.</li>
+                            <li><strong>Anatomical Inconsistencies:</strong> Watch human movement for sudden slips in physics, hands passing through objects, stiff body language, or a glass/unblinking stare.</li>
+                            <li><strong>Audio-Visual Sync:</strong> Check if lip movements precisely match speech, or if ambient background noise disappears unnaturally during dialogue.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-btn" onclick="toggleAccordion('txt-box')">
+                        <span><i class="fa-regular fa-file-lines" style="color: var(--primary); margin-right: 8px;"></i> 3. Text & Articles</span>
+                        <i class="fa-solid fa-chevron-down" id="icon-txt-box"></i>
+                    </button>
+                    <div id="txt-box" class="accordion-content">
+                        <p><em>AI text detectors are notoriously unreliable and prone to false positives, so human evaluation of style and substance is key.</em></p>
+                        <ul>
+                            <li><strong>Stylistic Fingerprints:</strong> AI writing relies on predictable structures—opening with a broad statement, neutral tone, and a mononymous conclusion labeled "Conclusion".</li>
+                            <li><strong>Overused Jargon & Transitions:</strong> Watch for words like <em>delve, tapestry, align, seamless, testament,</em> and <em>beacon</em>, plus em dashes and breathless short sentences.</li>
+                            <li><strong>Fabricated Citations:</strong> AI frequently hallucinates fake studies, exact quotes, and non-existent links that look completely authentic until verified.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-btn" onclick="toggleAccordion('code-box')">
+                        <span><i class="fa-solid fa-code" style="color: var(--primary); margin-right: 8px;"></i> 4. Code</span>
+                        <i class="fa-solid fa-chevron-down" id="icon-code-box"></i>
+                    </button>
+                    <div id="code-box" class="accordion-content">
+                        <p><em>AI-generated code looks clean on the surface but often carries structural tells:</em></p>
+                        <ul>
+                            <li><strong>The "Too Clever" or Generic Solution:</strong> AI tends to write overly verbose, standard textbook algorithms or boilerplate code in an overly complex way.</li>
+                            <li><strong>Phantom Dependencies:</strong> Code blocks may import libraries, packages, or specific module functions that do not actually exist or are deprecated.</li>
+                            <li><strong>Subtle Logic Gaps:</strong> Syntax will compile and look pristine, but it can miss edge cases, security validation, or state-handling logic native to project architecture.</li>
+                        </ul>
+                    </div>
+                </div>
+
             </div>
         </section>
 
-        <!-- Right Column: Verification Upload & Instructions (5 Cols) -->
-        <section class="lg:col-span-5 space-y-6 no-print">
-            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-                <h2 class="text-xl font-semibold text-slate-900 mb-2 flex items-center gap-2">
-                    <i class="fa-solid fa-file-arrow-up text-indigo-600"></i> Metadata & Provenance Analyzer
-                </h2>
-                <p class="text-sm text-slate-500 mb-4">Upload a document, image, or file to check cryptographic signatures and tags.</p>
+        <!-- Right: Upload & Verification Tool -->
+        <section>
+            <div class="card">
+                <h2><i class="fa-solid fa-file-arrow-up" style="color: var(--primary);"></i> Metadata & Provenance Analyzer</h2>
+                <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 1.5rem;">Upload a file to check cryptographic signatures and tags.</p>
 
-                <!-- Helpful Hints Box -->
-                <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4 text-xs text-amber-800 space-y-2">
-                    <p class="font-semibold flex items-center gap-1"><i class="fa-solid fa-triangle-exclamation"></i> Verification Best Practices:</p>
-                    <ul class="list-disc pl-4 space-y-1">
+                <div class="hints-box">
+                    <strong><i class="fa-solid fa-triangle-exclamation"></i> Verification Best Practices:</strong>
+                    <ul>
                         <li>Always use the <strong>original file</strong> downloaded straight from the source (avoid screenshots or compressed downloads).</li>
-                        <li>Run it through a C2PA verifier (<a href="https://contentcredentials.org" target="_blank" class="underline font-semibold">contentcredentials.org</a>) to check for a valid digital signature.</li>
+                        <li>Run it through a C2PA verifier (<a href="https://contentcredentials.org" target="_blank">contentcredentials.org</a>) for digital signatures.</li>
                         <li>Inspect file properties or ExifTool for software tags, descriptions, or generator prompts if C2PA data is absent.</li>
                     </ul>
                 </div>
 
-                <!-- File Drop Zone Form -->
-                <form id="verify-form" onsubmit="handleVerification(event)" class="space-y-4">
-                    <div class="border-2 border-dashed border-slate-300 rounded-lg p-6 text-center hover:border-indigo-500 transition-colors cursor-pointer bg-slate-50 relative">
-                        <input type="file" id="file-input" required class="absolute inset-0 opacity-0 cursor-pointer w-full h-full" onchange="updateFileName(this)">
-                        <div id="dropzone-text" class="space-y-2">
-                            <i class="fa-solid fa-cloud-arrow-up text-3xl text-indigo-500"></i>
-                            <p class="text-sm font-medium text-slate-700">Drag and drop your file here, or <span class="text-indigo-600">browse</span></p>
-                            <p class="text-xs text-slate-400">Supports images, documents, audio, and code containers</p>
+                <form onsubmit="runAnalysis(event)">
+                    <div class="dropzone">
+                        <input type="file" id="fileInput" required onchange="fileNameChanged(this)">
+                        <div id="dropText">
+                            <i class="fa-solid fa-cloud-arrow-up" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 0.5rem;"></i>
+                            <p style="margin: 0; font-weight: 500;">Drag and drop your file here, or <span style="color: var(--primary);">browse</span></p>
+                            <p style="margin: 5px 0 0 0; font-size: 0.75rem; color: #94a3b8;">Supports images, documents, audio, and code containers</p>
                         </div>
                     </div>
-
-                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 shadow-sm">
+                    <button type="submit" class="btn">
                         <i class="fa-solid fa-magnifying-glass-chart"></i> Run Provenance & Metadata Scan
                     </button>
                 </form>
             </div>
         </section>
-
     </main>
 
-    <!-- Report Section (Appears after scan) -->
-    <section class="max-w-7xl mx-auto px-4 pb-12 w-full">
-        <div id="report-section" class="hidden bg-white rounded-xl shadow-lg border border-slate-200 p-8">
-            <div id="printable-report" class="space-y-6">
-                
-                <!-- Report Header -->
-                <div class="flex flex-col md:flex-row justify-between border-b border-slate-200 pb-6 gap-4">
-                    <div>
-                        <div class="text-xs uppercase tracking-wider font-bold text-indigo-600">Missouri State Team Authentication Service</div>
-                        <h3 class="text-2xl font-bold text-slate-900 mt-1">Content Authenticity & Provenance Report</h3>
-                        <p class="text-sm text-slate-500 mt-1">Generated on <span id="report-timestamp"></span></p>
-                    </div>
-                    <div class="flex items-start gap-2 no-print">
-                        <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-900 text-white text-sm font-medium py-2 px-4 rounded-lg transition-colors flex items-center gap-2 shadow-sm">
-                            <i class="fa-solid fa-print"></i> Print / Save to PDF
-                        </button>
-                    </div>
+    <!-- Report Section -->
+    <div id="reportContainer" class="hidden">
+        <div class="report-card" id="printable-report">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1.5rem;">
+                <div>
+                    <span style="font-size: 0.75rem; text-transform: uppercase; font-weight: bold; color: var(--primary);">Missouri State Team Authentication Service</span>
+                    <h3 style="margin: 5px 0 0 0; font-size: 1.5rem; color: #0f172a;">Content Authenticity & Provenance Report</h3>
+                    <p style="margin: 5px 0 0 0; font-size: 0.85rem; color: #64748b;">Generated on <span id="reportDate"></span></p>
                 </div>
-
-                <!-- File Specs Summary -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-slate-50 p-4 rounded-lg border border-slate-200">
-                    <div>
-                        <span class="block text-xs text-slate-500 font-medium uppercase">File Name</span>
-                        <span id="rep-filename" class="text-sm font-semibold text-slate-800 break-all">-</span>
-                    </div>
-                    <div>
-                        <span class="block text-xs text-slate-500 font-medium uppercase">Detected Media Type</span>
-                        <span id="rep-filetype" class="text-sm font-semibold text-slate-800">-</span>
-                    </div>
-                    <div>
-                        <span class="block text-xs text-slate-500 font-medium uppercase">Provenance Standard Status</span>
-                        <span id="rep-status" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800 mt-0.5">-</span>
-                    </div>
+                <div class="no-print">
+                    <button onclick="window.print()" class="btn" style="padding: 0.5rem 1rem; font-size: 0.85rem;"><i class="fa-solid fa-print"></i> Print / Save to PDF</button>
                 </div>
+            </div>
 
-                <!-- Detailed Analysis Findings -->
-                <div class="space-y-4">
-                    <h4 class="text-lg font-semibold text-slate-800 border-b border-slate-100 pb-2">Analysis Breakdown & Ledger Findings</h4>
-                    
-                    <div class="space-y-3 text-sm">
-                        <div class="p-4 rounded-lg bg-slate-50 border border-slate-200">
-                            <strong class="text-slate-900 block mb-1">1. C2PA Content Credentials & Cryptographic Ledger</strong>
-                            <p id="rep-c2pa-detail" class="text-slate-600">Checking manifest containers...</p>
-                        </div>
-                        
-                        <div class="p-4 rounded-lg bg-slate-50 border border-slate-200">
-                            <strong class="text-slate-900 block mb-1">2. Standard Image Metadata (EXIF, IPTC, XMP)</strong>
-                            <p id="rep-exif-detail" class="text-slate-600">Scanning embedded unencrypted tags...</p>
-                        </div>
-
-                        <div class="p-4 rounded-lg bg-slate-50 border border-slate-200">
-                            <strong class="text-slate-900 block mb-1">3. Structural & Contextual Heuristics</strong>
-                            <p id="rep-heuristic-detail" class="text-slate-600">Evaluating formatting patterns...</p>
-                        </div>
-                    </div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; background: #f8fafc; padding: 1rem; border-radius: 6px; border: 1px solid var(--border-color); margin-bottom: 1.5rem;">
+                <div>
+                    <span style="display: block; font-size: 0.7rem; color: #64748b; font-weight: bold; text-transform: uppercase;">File Name</span>
+                    <span id="repFileName" style="font-size: 0.9rem; font-weight: 600; word-break: break-all;">-</span>
                 </div>
-
-                <!-- Recommendations / Next Steps -->
-                <div class="border-t border-slate-200 pt-4 text-xs text-slate-500">
-                    <p><strong>Note for Reviewers:</strong> This report relies on metadata packet verification, structural signatures, and digital watermarking checks. If C2PA manifests are absent due to platform compression or screenshots, human visual inspection via the checklist above is strongly advised.</p>
+                <div>
+                    <span style="display: block; font-size: 0.7rem; color: #64748b; font-weight: bold; text-transform: uppercase;">File Type</span>
+                    <span id="repFileType" style="font-size: 0.9rem; font-weight: 600;">-</span>
                 </div>
+                <div>
+                    <span style="display: block; font-size: 0.7rem; color: #64748b; font-weight: bold; text-transform: uppercase;">Status</span>
+                    <span id="repStatus" class="badge badge-warning" style="margin-top: 4px;">-</span>
+                </div>
+            </div>
 
+            <h4 style="font-size: 1rem; color: #0f172a; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.5rem;">Analysis Breakdown & Ledger Findings</h4>
+            <div style="font-size: 0.9rem; color: #334155; line-height: 1.6;">
+                <div style="background: #f8fafc; border: 1px solid var(--border-color); padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
+                    <strong>1. C2PA Content Credentials & Cryptographic Ledger</strong>
+                    <p id="c2paText" style="margin: 5px 0 0 0; color: #64748b;">Analyzing manifest container signatures...</p>
+                </div>
+                <div style="background: #f8fafc; border: 1px solid var(--border-color); padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
+                    <strong>2. Standard Image Metadata (EXIF, IPTC, XMP)</strong>
+                    <p id="exifText" style="margin: 5px 0 0 0; color: #64748b;">Scanning unencrypted software tags and description fields...</p>
+                </div>
+                <div style="background: #f8fafc; border: 1px solid var(--border-color); padding: 1rem; border-radius: 6px;">
+                    <strong>3. Structural & Contextual Heuristics</strong>
+                    <p id="heuristicText" style="margin: 5px 0 0 0; color: #64748b;">Evaluating formatting patterns and generation footprints...</p>
+                </div>
+            </div>
+
+            <div style="margin-top: 2rem; border-top: 1px solid var(--border-color); padding-top: 1rem; font-size: 0.75rem; color: #64748b;">
+                <p><strong>Note for Reviewers:</strong> This research prototype evaluates metadata packets and structural signatures. If C2PA manifests are stripped due to social platform compression, human visual inspection via the checklist is advised.</p>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-400 py-6 text-center text-xs mt-auto no-print">
-        <p>&copy; 2026 Missouri State Team Operations. All rights reserved.</p>
+    <footer class="no-print">
+        <p>&copy; 2026 State of Missouri. Research prototype for AI validation.</p>
     </footer>
 
-    <!-- JavaScript Logic -->
     <script>
-        // Accordion Toggle Function
         function toggleAccordion(id) {
             const content = document.getElementById(id);
-            const icon = document.getElementById('icon-' + id);
-            
-            if (content.classList.contains('hidden')) {
-                content.classList.remove('hidden');
-                icon.classList.add('rotate-180');
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
             } else {
-                content.classList.add('hidden');
-                icon.classList.remove('rotate-180');
+                content.classList.add('active');
             }
         }
 
-        // Update Dropzone label on file selection
-        function updateFileName(input) {
-            const textDiv = document.getElementById('dropzone-text');
+        function fileNameChanged(input) {
+            const dropText = document.getElementById('dropText');
             if (input.files && input.files[0]) {
-                textDiv.innerHTML = `<i class="fa-solid fa-file-circle-check text-3xl text-emerald-500"></i>
-                                     <p class="text-sm font-semibold text-slate-800">${input.files[0].name}</p>
-                                     <p class="text-xs text-slate-400">Ready for authenticity scan</p>`;
+                dropText.innerHTML = `<i class="fa-solid fa-file-circle-check" style="font-size: 2.5rem; color: #10b981; margin-bottom: 0.5rem;"></i>
+                                     <p style="margin: 0; font-weight: 600; color: #0f172a;">${input.files[0].name}</p>
+                                     <p style="margin: 5px 0 0 0; font-size: 0.75rem; color: #64748b;">Ready for analysis</p>`;
             }
         }
 
-        // Simulate Verification Analysis & Populate Authenticity Report
-        function handleVerification(event) {
-            event.preventDefault();
-            const fileInput = document.getElementById('file-input');
-            if (!fileInput.files || fileInput.files.length === 0) return;
+        function runAnalysis(e) {
+            e.preventDefault();
+            const input = document.getElementById('fileInput');
+            if (!input.files || input.files.length === 0) return;
 
-            const file = fileInput.files[0];
-            const reportSection = document.getElementById('report-section');
-            
-            // Populate Report Fields
-            document.getElementById('report-timestamp').innerText = new Date().toLocaleString();
-            document.getElementById('rep-filename').innerText = file.name;
-            document.getElementById('rep-filetype').innerText = file.type || "Unknown / Binary Container";
+            const file = input.files[0];
+            document.getElementById('reportDate').innerText = new Date().toLocaleString();
+            document.getElementById('repFileName').innerText = file.name;
+            document.getElementById('repFileType').innerText = file.type || "Unknown / Binary Container";
 
-            // Simulated Analysis logic based on filename/type
-            const statusBadge = document.getElementById('rep-status');
-            const c2paDetail = document.getElementById('rep-c2pa-detail');
-            const exifDetail = document.getElementById('rep-exif-detail');
-            const heuristicDetail = document.getElementById('rep-heuristic-detail');
+            const isAI = file.name.toLowerCase().includes('ai') || file.name.toLowerCase().includes('gen') || file.size < 40000;
+            const statusBadge = document.getElementById('repStatus');
 
-            // Mock evaluation logic for demonstration purposes
-            const isLikelyAI = file.name.toLowerCase().includes('ai') || file.name.toLowerCase().includes('gen') || file.size < 50000;
-
-            if (isLikelyAI) {
-                statusBadge.className = "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 mt-0.5";
+            if (isAI) {
+                statusBadge.className = "badge badge-warning";
                 statusBadge.innerText = "AI Signatures Detected";
-                
-                c2paDetail.innerText = "C2PA Manifest check located embedded algorithmic training markers (trainedAlgorithmicMedia). Signatures indicate automated generation or modification.";
-                exifDetail.innerText = "EXIF/XMP tags found matching 'AISystemUsed' or generative parameter strings within the file metadata description fields.";
-                heuristicDetail.innerText = "Structural fingerprint matches known generation tools. Review visual/textual checklist for further confirmation.";
+                document.getElementById('c2paText').innerText = "C2PA manifest scan located embedded algorithmic training markers (trainedAlgorithmicMedia). Signatures indicate automated generation.";
+                document.getElementById('exifText').innerText = "EXIF/XMP tags found matching 'AISystemUsed' or generative parameters within metadata description fields.";
+                document.getElementById('heuristicText').innerText = "Structural fingerprint matches known generation tools. Review visual/textual checklist for confirmation.";
             } else {
-                statusBadge.className = "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 mt-0.5";
+                statusBadge.className = "badge badge-success";
                 statusBadge.innerText = "Verified / Clean";
-
-                c2paDetail.innerText = "No active C2PA cryptographic tamper-evident ledger found. File container structure conforms to standard capture devices or human authoring suites.";
-                exifDetail.innerText = "Standard camera or document properties verified. No synthetic training tags or hidden prompt strings discovered.";
-                heuristicDetail.innerText = "No structural anomaly patterns, phantom dependencies, or repetitive stylistic transitions detected.";
+                document.getElementById('c2paText').innerText = "No active C2PA cryptographic tamper-evident ledger found. File container conforms to standard capture devices or human authoring suites.";
+                document.getElementById('exifText').innerText = "Standard camera or document properties verified. No synthetic training tags or hidden prompt strings discovered.";
+                document.getElementById('heuristicText').innerText = "No structural anomaly patterns, phantom dependencies, or repetitive stylistic transitions detected.";
             }
 
-            // Unhide Report & Smooth Scroll to it
-            reportSection.classList.remove('hidden');
-            reportSection.scrollIntoView({ behavior: 'smooth' });
+            const container = document.getElementById('reportContainer');
+            container.classList.remove('hidden');
+            container.scrollIntoView({ behavior: 'smooth' });
         }
     </script>
 </body>
