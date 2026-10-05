@@ -106,6 +106,44 @@
         .accordion-content.active {
             display: block;
         }
+        .action-button-group {
+            display: flex;
+            gap: 8px;
+            margin-top: 0.75rem;
+            flex-wrap: wrap;
+        }
+        .btn-outline {
+            background: #eff6ff;
+            color: var(--primary);
+            border: 1px solid #bfdbfe;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-outline:hover {
+            background: #dbeafe;
+        }
+        .btn-outline-video {
+            background: #fdf4ff;
+            color: #701a75;
+            border: 1px solid #f5d0fe;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-outline-video:hover {
+            background: #fae8ff;
+        }
         .hints-box {
             background: #fffbeb;
             border: 1px solid #fde68a;
@@ -166,6 +204,41 @@
         .btn:hover {
             background: #1d4ed8;
         }
+        /* Modal Popup Viewer */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+        .modal.active {
+            display: flex;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 8px;
+            max-width: 800px;
+            width: 100%;
+            padding: 1.5rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #64748b;
+        }
         .report-card {
             background: white;
             border-radius: 8px;
@@ -219,6 +292,7 @@
                 <h2><i class="fa-solid fa-list-check" style="color: var(--primary);"></i> Visual & Textual Tell-Tale Checklist</h2>
                 <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 1.5rem;">Click any category to expand inspection criteria.</p>
 
+                <!-- 1. Images -->
                 <div class="accordion-item">
                     <button class="accordion-btn" onclick="toggleAccordion('img-box')">
                         <span><i class="fa-regular fa-image" style="color: var(--primary); margin-right: 8px;"></i> 1. Images</span>
@@ -232,9 +306,18 @@
                             <li><strong>Geometric & Physics Flaws:</strong> Check background alignment. Look for melting architecture, asymmetrical earrings or eyeglasses, impossible reflections in glass/water, and shadows pointing in multiple directions.</li>
                             <li><strong>Garbled Text:</strong> Signs, storefronts, and book spines often render as beautiful gibberish or nonsense letters.</li>
                         </ul>
+                        <div class="action-button-group">
+                            <button class="btn-outline" onclick="openMediaModal('image', 'ai_forensics_1_image_flaws.png', 'Image Forensics: Physical & Structural Anomalies')">
+                                <i class="fa-solid fa-eye"></i> See Example
+                            </button>
+                            <button class="btn-outline-video" onclick="openMediaModal('video', 'example_1.mp4', 'Video Example: Image Forensics Review')">
+                                <i class="fa-solid fa-video"></i> Watch Example
+                            </button>
+                        </div>
                     </div>
                 </div>
 
+                <!-- 2. Video -->
                 <div class="accordion-item">
                     <button class="accordion-btn" onclick="toggleAccordion('vid-box')">
                         <span><i class="fa-solid fa-video" style="color: var(--primary); margin-right: 8px;"></i> 2. Video</span>
@@ -247,9 +330,18 @@
                             <li><strong>Anatomical Inconsistencies:</strong> Watch human movement for sudden slips in physics, hands passing through objects, stiff body language, or a glass/unblinking stare.</li>
                             <li><strong>Audio-Visual Sync:</strong> Check if lip movements precisely match speech, or if ambient environmental background noise disappears unnaturally during dialogue.</li>
                         </ul>
+                        <div class="action-button-group">
+                            <button class="btn-outline" onclick="openMediaModal('image', 'ai_forensics_2_video_glitches.png', 'Video Forensics: Temporal & Physical Glitches')">
+                                <i class="fa-solid fa-eye"></i> See Example
+                            </button>
+                            <button class="btn-outline-video" onclick="openMediaModal('video', 'example_2.mp4', 'Video Example: Temporal Glitch Review')">
+                                <i class="fa-solid fa-video"></i> Watch Example
+                            </button>
+                        </div>
                     </div>
                 </div>
 
+                <!-- 3. Text & Articles / HR Resumes -->
                 <div class="accordion-item">
                     <button class="accordion-btn" onclick="toggleAccordion('txt-box')">
                         <span><i class="fa-regular fa-file-lines" style="color: var(--primary); margin-right: 8px;"></i> 3. Text & Articles / HR Resumes</span>
@@ -271,9 +363,18 @@
                             </li>
                             <li><strong>Fabricated Citations:</strong> AI frequently hallucinates fake studies, exact quotes, and non-existent links that look completely authentic until verified.</li>
                         </ul>
+                        <div class="action-button-group">
+                            <button class="btn-outline" onclick="openMediaModal('image', 'ai_forensics_3_resume_tells.png', 'Text Forensics: Resume & Cover Letter Generation Tells')">
+                                <i class="fa-solid fa-eye"></i> See Example
+                            </button>
+                            <button class="btn-outline-video" onclick="openMediaModal('video', 'example_3.mp4', 'Video Example: Text & Resume Screening')">
+                                <i class="fa-solid fa-video"></i> Watch Example
+                            </button>
+                        </div>
                     </div>
                 </div>
 
+                <!-- 4. Code -->
                 <div class="accordion-item">
                     <button class="accordion-btn" onclick="toggleAccordion('code-box')">
                         <span><i class="fa-solid fa-code" style="color: var(--primary); margin-right: 8px;"></i> 4. Code</span>
@@ -286,6 +387,14 @@
                             <li><strong>Phantom Dependencies:</strong> Code blocks may import libraries, packages, or specific module functions that do not actually exist or are deprecated.</li>
                             <li><strong>Subtle Logic Gaps:</strong> Syntax will compile and look pristine, but it can miss edge cases, security validation, or state-handling logic native to project architecture.</li>
                         </ul>
+                        <div class="action-button-group">
+                            <button class="btn-outline" onclick="openMediaModal('image', 'ai_forensics_4_code_tells.png', 'Code Forensics: Anomalies & Phantom Dependencies')">
+                                <i class="fa-solid fa-eye"></i> See Example
+                            </button>
+                            <button class="btn-outline-video" onclick="openMediaModal('video', 'example_4.mp4', 'Video Example: Code Anomaly Audit')">
+                                <i class="fa-solid fa-video"></i> Watch Example
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -330,6 +439,25 @@
             </div>
         </section>
     </main>
+
+    <!-- Unified Dynamic Modal Viewer for Images & Videos -->
+    <div id="mediaModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeMediaModal()">&times;</button>
+            <h3 id="modalTitle" style="margin-top: 0; color: #0f172a; display: flex; align-items: center; gap: 8px;">
+                <i class="fa-solid fa-magnifying-glass" style="color: var(--primary);"></i> Training Reference Viewer
+            </h3>
+            
+            <!-- Dynamic Container for Image or Video -->
+            <div id="modalBody" style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: 6px; padding: 0.5rem; text-align: center;">
+                <!-- Content injected via JavaScript -->
+            </div>
+
+            <div style="text-align: right; margin-top: 1rem;">
+                <button class="btn" onclick="closeMediaModal()" style="width: auto; padding: 0.5rem 1.5rem; display: inline-flex;">Close Viewer</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Report Section -->
     <div id="reportContainer" class="hidden">
@@ -394,6 +522,27 @@
             } else {
                 content.classList.add('active');
             }
+        }
+
+        function openMediaModal(type, sourceUrl, titleText) {
+            document.getElementById('modalTitle').innerHTML = `<i class="fa-solid fa-magnifying-glass" style="color: var(--primary);"></i> ${titleText}`;
+            const bodyContainer = document.getElementById('modalBody');
+
+            if (type === 'image') {
+                bodyContainer.innerHTML = `<img src="${sourceUrl}" alt="${titleText}" style="width: 100%; height: auto; border-radius: 4px; display: block;">`;
+            } else if (type === 'video') {
+                bodyContainer.innerHTML = `<video controls autoplay style="width: 100%; height: auto; border-radius: 4px; display: block;">
+                                                <source src="${sourceUrl}" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                           </video>`;
+            }
+            document.getElementById('mediaModal').classList.add('active');
+        }
+
+        function closeMediaModal() {
+            document.getElementById('mediaModal').classList.remove('active');
+            // Clear video playback when closed
+            document.getElementById('modalBody').innerHTML = '';
         }
 
         function fileNameChanged(input) {
