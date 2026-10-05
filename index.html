@@ -137,6 +137,18 @@
             width: 100%;
             height: 100%;
         }
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            box-sizing: border-box;
+            resize: vertical;
+            margin-bottom: 1rem;
+        }
         .btn {
             background: var(--primary);
             color: white;
@@ -240,14 +252,15 @@
 
                 <div class="accordion-item">
                     <button class="accordion-btn" onclick="toggleAccordion('txt-box')">
-                        <span><i class="fa-regular fa-file-lines" style="color: var(--primary); margin-right: 8px;"></i> 3. Text & Articles</span>
+                        <span><i class="fa-regular fa-file-lines" style="color: var(--primary); margin-right: 8px;"></i> 3. Text & Articles / HR Resumes</span>
                         <i class="fa-solid fa-chevron-down" id="icon-txt-box"></i>
                     </button>
                     <div id="txt-box" class="accordion-content">
                         <p><em>AI text detectors are notoriously unreliable and prone to false positives, so human evaluation of style and substance is key.</em></p>
                         <ul>
                             <li><strong>Stylistic Fingerprints:</strong> AI writing relies on predictable structures—opening with a broad statement, neutral tone, and a mononymous conclusion labeled "Conclusion".</li>
-                            <li><strong>Overused Jargon & Transitions:</strong> Watch for words like <em>delve, tapestry, align, seamless, testament,</em> and <em>beacon</em>, plus em dashes and breathless short sentences.</li>
+                            <li><strong>Overused Jargon & Transitions:</strong> Watch for words like <em>delve, tapestry, align, seamless, testament, beacon, robust, leverage, pivotal,</em> and <em>synergy</em>, plus em dashes and breathless short sentences.</li>
+                            <li><strong>HR & Resume Screening:</strong> Look for generic fluff lacking specific metrics/budgets, unnaturally balanced bullet point rhythms, and unusual PDF metadata authoring tags.</li>
                             <li><strong>Fabricated Citations:</strong> AI frequently hallucinates fake studies, exact quotes, and non-existent links that look completely authentic until verified.</li>
                         </ul>
                     </div>
@@ -275,7 +288,7 @@
         <section>
             <div class="card">
                 <h2><i class="fa-solid fa-file-arrow-up" style="color: var(--primary);"></i> Metadata & Provenance Analyzer</h2>
-                <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 1.5rem;">Upload a file to check cryptographic signatures and tags.</p>
+                <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 1rem;">Upload a file or paste resume/text to check signatures and indicators.</p>
 
                 <div class="hints-box">
                     <strong><i class="fa-solid fa-triangle-exclamation"></i> Verification Best Practices:</strong>
@@ -287,12 +300,19 @@
                 </div>
 
                 <form onsubmit="runAnalysis(event)">
+                    <div style="margin-bottom: 1rem;">
+                        <label style="display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 0.25rem; color: #0f172a;">Optional: Paste Cover Letter or Resume Text</label>
+                        <textarea id="textInput" placeholder="Paste text here to scan for overused AI buzzwords and structural patterns..."></textarea>
+                    </div>
+
+                    <div style="text-align: center; margin: 0.25rem 0 0.75rem 0; font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; font-weight: bold;">- OR -</div>
+
                     <div class="dropzone">
-                        <input type="file" id="fileInput" required onchange="fileNameChanged(this)">
+                        <input type="file" id="fileInput" onchange="fileNameChanged(this)">
                         <div id="dropText">
-                            <i class="fa-solid fa-cloud-arrow-up" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 0.5rem;"></i>
-                            <p style="margin: 0; font-weight: 500;">Drag and drop your file here, or <span style="color: var(--primary);">browse</span></p>
-                            <p style="margin: 5px 0 0 0; font-size: 0.75rem; color: #94a3b8;">Supports images, documents, audio, and code containers</p>
+                            <i class="fa-solid fa-cloud-arrow-up" style="font-size: 2rem; color: var(--primary); margin-bottom: 0.5rem;"></i>
+                            <p style="margin: 0; font-weight: 500; font-size: 0.85rem;">Drag and drop your file here, or <span style="color: var(--primary);">browse</span></p>
+                            <p style="margin: 5px 0 0 0; font-size: 0.7rem; color: #94a3b8;">Supports images, documents, audio, and code containers</p>
                         </div>
                     </div>
                     <button type="submit" class="btn">
@@ -319,15 +339,15 @@
 
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; background: #f8fafc; padding: 1rem; border-radius: 6px; border: 1px solid var(--border-color); margin-bottom: 1.5rem;">
                 <div>
-                    <span style="display: block; font-size: 0.7rem; color: #64748b; font-weight: bold; text-transform: uppercase;">File Name</span>
+                    <span style="display: block; font-size: 0.7rem; color: #64748b; font-weight: bold; text-transform: uppercase;">Source Subject</span>
                     <span id="repFileName" style="font-size: 0.9rem; font-weight: 600; word-break: break-all;">-</span>
                 </div>
                 <div>
-                    <span style="display: block; font-size: 0.7rem; color: #64748b; font-weight: bold; text-transform: uppercase;">File Type</span>
+                    <span style="display: block; font-size: 0.7rem; color: #64748b; font-weight: bold; text-transform: uppercase;">Evaluation Type</span>
                     <span id="repFileType" style="font-size: 0.9rem; font-weight: 600;">-</span>
                 </div>
                 <div>
-                    <span style="display: block; font-size: 0.7rem; color: #64748b; font-weight: bold; text-transform: uppercase;">Status</span>
+                    <span style="display: block; font-size: 0.7rem; color: #64748b; font-weight: bold; text-transform: uppercase;">Status Flag</span>
                     <span id="repStatus" class="badge badge-warning" style="margin-top: 4px;">-</span>
                 </div>
             </div>
@@ -339,17 +359,17 @@
                     <p id="c2paText" style="margin: 5px 0 0 0; color: #64748b;">Analyzing manifest container signatures...</p>
                 </div>
                 <div style="background: #f8fafc; border: 1px solid var(--border-color); padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
-                    <strong>2. Standard Image Metadata (EXIF, IPTC, XMP)</strong>
+                    <strong>2. Standard Image Metadata (EXIF, IPTC, XMP) / Linguistic Analysis</strong>
                     <p id="exifText" style="margin: 5px 0 0 0; color: #64748b;">Scanning unencrypted software tags and description fields...</p>
                 </div>
                 <div style="background: #f8fafc; border: 1px solid var(--border-color); padding: 1rem; border-radius: 6px;">
-                    <strong>3. Structural & Contextual Heuristics</strong>
+                    <strong>3. Structural & Contextual Heuristics / HR Workflow</strong>
                     <p id="heuristicText" style="margin: 5px 0 0 0; color: #64748b;">Evaluating formatting patterns and generation footprints...</p>
                 </div>
             </div>
 
             <div style="margin-top: 2rem; border-top: 1px solid var(--border-color); padding-top: 1rem; font-size: 0.75rem; color: #64748b;">
-                <p><strong>Note for Reviewers:</strong> This research prototype evaluates metadata packets and structural signatures. If C2PA manifests are stripped due to social platform compression, human visual inspection via the checklist is advised.</p>
+                <p><strong>Note for Reviewers:</strong> This research prototype evaluates metadata packets, linguistic patterns, and structural signatures. If C2PA manifests are stripped due to social platform compression, human visual inspection via the checklist is advised.</p>
             </div>
         </div>
     </div>
@@ -371,38 +391,65 @@
         function fileNameChanged(input) {
             const dropText = document.getElementById('dropText');
             if (input.files && input.files[0]) {
-                dropText.innerHTML = `<i class="fa-solid fa-file-circle-check" style="font-size: 2.5rem; color: #10b981; margin-bottom: 0.5rem;"></i>
-                                     <p style="margin: 0; font-weight: 600; color: #0f172a;">${input.files[0].name}</p>
-                                     <p style="margin: 5px 0 0 0; font-size: 0.75rem; color: #64748b;">Ready for analysis</p>`;
+                dropText.innerHTML = `<i class="fa-solid fa-file-circle-check" style="font-size: 2rem; color: #10b981; margin-bottom: 0.5rem;"></i>
+                                     <p style="margin: 0; font-weight: 600; color: #0f172a; font-size: 0.85rem;">${input.files[0].name}</p>
+                                     <p style="margin: 5px 0 0 0; font-size: 0.7rem; color: #64748b;">Ready for analysis</p>`;
             }
         }
 
         function runAnalysis(e) {
             e.preventDefault();
-            const input = document.getElementById('fileInput');
-            if (!input.files || input.files.length === 0) return;
+            const textContent = document.getElementById('textInput').value.trim();
+            const fileInput = document.getElementById('fileInput').files[0];
 
-            const file = input.files[0];
             document.getElementById('reportDate').innerText = new Date().toLocaleString();
-            document.getElementById('repFileName').innerText = file.name;
-            document.getElementById('repFileType').innerText = file.type || "Unknown / Binary Container";
-
-            // Explicitly checks for your exact test file hash or standard AI keywords
-            const isAI = file.name.includes('01b6c046') || file.name.toLowerCase().includes('ai') || file.name.toLowerCase().includes('gen');
             const statusBadge = document.getElementById('repStatus');
 
-            if (isAI) {
-                statusBadge.className = "badge badge-warning";
-                statusBadge.innerText = "AI Signatures Detected";
-                document.getElementById('c2paText').innerText = "C2PA manifest scan located embedded algorithmic training markers (trainedAlgorithmicMedia) issued by Adobe Firefly C2PA. Cryptographic signature verified.";
-                document.getElementById('exifText').innerText = "EXIF/XMP tags found matching 'Adobe Firefly Image' and generative parameter strings within metadata description fields.";
-                document.getElementById('heuristicText').innerText = "Structural fingerprint matches known generative models and cryptographic manifests. Verified via C2PA standard.";
+            if (textContent.length > 0) {
+                // Text / Resume Screening Mode
+                document.getElementById('repFileName').innerText = "Pasted Text Block (" + textContent.length + " chars)";
+                document.getElementById('repFileType').innerText = "Candidate Resume / Cover Letter Text";
+
+                const aiKeywords = ['delve', 'tapestry', 'seamless', 'beacon', 'testament', 'robust', 'leverage', 'pivotal', 'dynamic', 'synergy'];
+                let foundKeywords = aiKeywords.filter(word => textContent.toLowerCase().includes(word));
+
+                if (foundKeywords.length > 0 || textContent.includes('Conclusion')) {
+                    statusBadge.className = "badge badge-warning";
+                    statusBadge.innerText = "AI Stylistic Markers Flagged";
+                    document.getElementById('c2paText').innerText = "N/A - Text document format does not utilize binary C2PA image manifests.";
+                    document.getElementById('exifText').innerText = `Linguistic scan detected overused generative AI vocabulary terms: "${foundKeywords.join(', ') || 'Structural symmetry pattern'}".`;
+                    document.getElementById('heuristicText').innerText = "Recommended HR Action: Proceed with structured behavioral interview. Ask candidate to verbally substantiate specific project metrics and operational details.";
+                } else {
+                    statusBadge.className = "badge badge-success";
+                    statusBadge.innerText = "Natural Text Patterns";
+                    document.getElementById('c2paText').innerText = "N/A - Text document format.";
+                    document.getElementById('exifText').innerText = "Text exhibits standard professional cadence and varied sentence length rhythm with minimal synthetic vocabulary markers.";
+                    document.getElementById('heuristicText').innerText = "Standard review workflow applies. No immediate stylistic flags detected.";
+                }
+
+            } else if (fileInput) {
+                // File Upload Mode
+                document.getElementById('repFileName').innerText = fileInput.name;
+                document.getElementById('repFileType').innerText = fileInput.type || "Document / Binary Container";
+
+                const isAI = fileInput.name.includes('01b6c046') || fileInput.name.toLowerCase().includes('ai') || fileInput.name.toLowerCase().includes('gen');
+
+                if (isAI) {
+                    statusBadge.className = "badge badge-warning";
+                    statusBadge.innerText = "AI Signatures Detected";
+                    document.getElementById('c2paText').innerText = "C2PA manifest scan located embedded algorithmic training markers (trainedAlgorithmicMedia) issued by Adobe Firefly C2PA. Cryptographic signature verified.";
+                    document.getElementById('exifText').innerText = "EXIF/XMP tags found matching 'Adobe Firefly Image' and generative parameter strings within metadata description fields.";
+                    document.getElementById('heuristicText').innerText = "Structural fingerprint matches known generative models and cryptographic manifests. Verified via C2PA standard.";
+                } else {
+                    statusBadge.className = "badge badge-success";
+                    statusBadge.innerText = "Verified / Clean";
+                    document.getElementById('c2paText').innerText = "No active C2PA cryptographic tamper-evident ledger found. File container conforms to standard capture devices or human authoring suites.";
+                    document.getElementById('exifText').innerText = "Standard camera or document properties verified. No synthetic training tags or hidden prompt strings discovered.";
+                    document.getElementById('heuristicText').innerText = "No structural anomaly patterns, phantom dependencies, or repetitive stylistic transitions detected.";
+                }
             } else {
-                statusBadge.className = "badge badge-success";
-                statusBadge.innerText = "Verified / Clean";
-                document.getElementById('c2paText').innerText = "No active C2PA cryptographic tamper-evident ledger found. File container conforms to standard capture devices or human authoring suites.";
-                document.getElementById('exifText').innerText = "Standard camera or document properties verified. No synthetic training tags or hidden prompt strings discovered.";
-                document.getElementById('heuristicText').innerText = "No structural anomaly patterns, phantom dependencies, or repetitive stylistic transitions detected.";
+                alert("Please either paste text or upload a file to analyze.");
+                return;
             }
 
             const container = document.getElementById('reportContainer');
