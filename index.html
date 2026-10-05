@@ -73,6 +73,19 @@
             align-items: center;
             gap: 8px;
         }
+        .concept-box {
+            background: #f1f5f9;
+            border-left: 4px solid var(--primary);
+            padding: 0.85rem 1rem;
+            border-radius: 4px;
+            margin-bottom: 1.25rem;
+            font-size: 0.85rem;
+            color: #334155;
+            line-height: 1.5;
+        }
+        .concept-box strong {
+            color: #0f172a;
+        }
         .accordion-item {
             border: 1px solid var(--border-color);
             border-radius: 6px;
@@ -82,7 +95,7 @@
         .accordion-btn {
             width: 100%;
             padding: 1rem;
-            background: #f1f5f9;
+            background: #f8fafc;
             border: none;
             text-align: left;
             font-weight: 600;
@@ -290,7 +303,14 @@
         <section>
             <div class="card">
                 <h2><i class="fa-solid fa-list-check" style="color: var(--primary);"></i> Visual & Textual Tell-Tale Checklist</h2>
-                <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 1.5rem;">Click any category to expand inspection criteria.</p>
+                <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 1rem;">Click any category to expand inspection criteria.</p>
+
+                <!-- Metadata & Provenance Definition Box -->
+                <div class="concept-box">
+                    <strong><i class="fa-solid fa-compass-drafting" style="color: var(--primary); margin-right: 4px;"></i> Core Authentication Concepts:</strong><br>
+                    • <strong>Metadata:</strong> Embedded file data (EXIF, IPTC, XMP tags) describing a file's creation software, timestamps, and parameters.<br>
+                    • <strong>Provenance:</strong> The verified historical record and tamper-evident cryptographic chain (such as C2PA standards) tracking how a digital asset was created and edited.
+                </div>
 
                 <!-- 1. Images -->
                 <div class="accordion-item">
